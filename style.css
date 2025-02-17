@@ -1,0 +1,354 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", serif;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  color: var(--primary-text);
+}
+:root {
+  --primary: #fcb900;
+  --secoundary: #ffffff;
+  --bg: #000000;
+  --card: #121212;
+  --primary-text: #ffffff;
+  --sub-text: #666666;
+  --border: 1px solid #2a2a2a;
+}
+[class*="grid"] {
+  display: grid;
+}
+.align-center {
+  align-items: center;
+}
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 8rem;
+}
+body {
+  -webkit-text-size-adjust: 100%;
+  background: var(--bg);
+}
+p,
+a,
+input,
+select,
+textarea,
+button {
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+p {
+  color: var(--sub-text);
+  line-height: 27px;
+}
+.btn,
+button {
+  padding: 1.5rem 3rem;
+  background: var(--primary);
+  font-size: 3rem;
+  color: var(--bg);
+  border-radius: 1rem;
+  cursor: pointer;
+  width: fit-content;
+  margin: auto;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+img,
+video {
+  max-width: 100%;
+}
+.container {
+  max-width: 1540px;
+  padding: 0 5rem;
+  margin: auto;
+  width: 100%;
+}
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+form {
+  background: var(--card);
+  padding: 5rem;
+  max-width: 80rem;
+  width: 100%;
+  margin: auto;
+  border-radius: 2rem;
+  border: var(--border);
+  margin: 10rem auto;
+}
+.title {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 5rem;
+}
+.title h1 {
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+.step-title {
+  margin-bottom: 2rem;
+}
+.step-title h2 {
+  font-size: 2rem;
+  font-weight: 400;
+}
+.cards-wraper {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.card-wrap label {
+  display: inline-block;
+  padding: 1.5rem 3rem;
+  border: var(--border);
+  background: var(--bg);
+  font-size: 2.3rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--sub-text);
+  text-transform: capitalize;
+}
+.card-wrap input[type="radio"],
+input[type="checkbox"] {
+  display: none;
+}
+.card-wrap input:checked ~ label {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.spacing-between {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* range slider */
+
+.range-slider {
+  width: 100%;
+  margin: 5rem auto;
+  position: relative;
+}
+
+#range {
+  -webkit-appearance: none;
+  width: 100%;
+  padding: 7px 0;
+  background: transparent;
+}
+#range:focus {
+  outline: none;
+}
+
+#range::before,
+#range::after {
+  position: absolute;
+  top: 4rem;
+  color: var(--primary);
+  font-size: 2rem;
+  font-weight: bold;
+}
+#range::before {
+  left: 0;
+  content: attr(data-min);
+}
+#range::after {
+  right: 0;
+  content: attr(data-max);
+}
+
+#range::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 2rem;
+  cursor: pointer;
+  animate: 0.2s;
+  background: linear-gradient(
+    90deg,
+    var(--primary) var(--range-progress),
+    var(--bg) var(--range-progress)
+  );
+  border-radius: 1rem;
+}
+#range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 8px solid #fff;
+  box-shadow: 0px 0px 0px 2px #000;
+  border-radius: 50%;
+  background: var(--primary);
+  cursor: pointer;
+  height: 32px;
+  width: 32px;
+  transform: translateY(calc(-50% + 8px));
+}
+
+#tooltip {
+  position: absolute;
+  top: -2.25rem;
+}
+#tooltip div {
+  position: absolute;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1;
+  padding: 8px 10px;
+  color: #fff;
+  border-radius: 5px;
+  background: var(--primary);
+  font-size: 2rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-weight: bold;
+  bottom: -10px;
+}
+#tooltip div:before {
+  position: absolute;
+  content: "";
+  left: 50%;
+  bottom: -13px;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-top-color: var(--primary);
+}
+input,
+textarea {
+  height: 6rem;
+  background: var(--bg);
+  border: var(--border);
+  padding: 1.5rem 3rem;
+  border-radius: 1rem;
+  font-size: 2rem;
+  width: 100%;
+  resize: none;
+}
+textarea {
+  height: 15rem;
+}
+input:focus {
+  border-color: var(--primary);
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+.row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.list .block-item{
+  font-size: 1.6rem;
+}
+.step-wraper {
+  display: none;
+}
+.step-wraper.active {
+  display: block;
+}
+.pricing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.pricing h2 {
+  font-size: 5rem;
+}
+.pricing h2 span {
+  font-size: 2rem;
+}
+.pricing p {
+  font-size: 2rem;
+}
+.item span {
+  color: var(--primary);
+}
+.list {
+  padding: 3rem;
+  background: var(--bg);
+  border: var(--border);
+  border-radius: 1rem;
+}
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.step-title-2 {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+}
+.step-title-2 h2 {
+  font-size: 3.5rem;
+  text-transform: capitalize;
+}
+.row-auto {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.note {
+  padding: 1rem 2rem;
+  background: #fcb9002c;
+  font-size: 1.6rem;
+  color: var(--primary);
+  border-radius: 1rem;
+  margin-top: 1.5rem;
+  width: fit-content;
+}
+#destinations-container {
+  display: none;
+  /* margin-bottom: 2rem; */
+}
+#destinations-container.active {
+  display: block;
+}
+.meaw {
+  display: none;
+}
+.meaw.active {
+  display: block;
+}
+.cstm {
+  display: none;
+}
+.cstm.active {
+  display: block;
+}

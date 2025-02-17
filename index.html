@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <main>
+      <div class="container">
+        <!-- multi-step form -->
+        <form action="" class="multi-step" onsubmit="SubmitData(event)">
+          <div class="title">
+            <h1>Get an estimate</h1>
+          </div>
+          <div class="step-main-wrap">
+            <!-- step 1 -->
+            <div class="step-wraper active" id="step1">
+              <div class="spacing-between">
+                <div class="block">
+                  <div class="step-title">
+                    <h2>Choose your service</h2>
+                  </div>
+                  <div class="cards-wraper">
+                    <div class="card-wrap">
+                      <input id="dropship" type="radio" name="service" />
+                      <label for="dropship" class="card"> Dropship </label>
+                    </div>
+                    <div class="card-wrap">
+                      <input id="bulkship" type="radio" name="service" />
+                      <label for="bulkship" class="card"> Bulk ship </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="block">
+                  
+                  <div class="row">
+                    <div id="destinations-container">
+                      <div class="step-title">
+                        <h2>Number of Destinations:</h2>
+                      </div>
+                      <input
+                        type="number"
+                        id="destinations"
+                        name="destinations"
+                        value="2"
+                        required
+                      />
+                    </div>
+                    <div id="number-of-dropships-container">
+                      <div class="step-title">
+                        <h2>Number of Dropships:</h2>
+                      </div>
+                      <input
+                        type="number"
+                        id="numOfdropship"
+                        name="numOfdropship"
+                        value="0"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <div class="step-title">
+                        <h2>Item Varient:</h2>
+                      </div>
+                      <input
+                        type="number"
+                        id="itemVarient"
+                        name="itemVarient"
+                        value="0"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="block">
+                  <div class="row-auto">
+                    <div>
+                      <div class="step-title">
+                        <h2>Apparel quantity</h2>
+                      </div>
+                      <input
+                        type="number"
+                        id="apparelQ"
+                        placeholder=""
+                        value="0"
+                      />
+                    </div>
+                    <div>
+                      <div class="step-title">
+                        <h2>Non-Apparel quantity</h2>
+                      </div>
+                      <input
+                        type="number"
+                        id="nonapparelQ"
+                        placeholder=""
+                        value="0"
+                      />
+                    </div>
+                    <div>
+                      <div class="step-title">
+                        <h2>Print Quantity</h2>
+                      </div>
+                      <input
+                        type="number"
+                        id="printQ"
+                        placeholder=""
+                        value="0"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="block">
+                  <div class="step-title">
+                    <h2>Box type</h2>
+                  </div>
+                  <div class="cards-wraper">
+                    <div class="card-wrap" onclick="RcstmAlrt()">
+                      <input id="standard" type="radio" name="box-type" />
+                      <label for="standard" class="card"> Standard Box </label>
+                    </div>
+                    <div class="card-wrap" onclick="cstmAlrt()">
+                      <input id="custom" type="radio" name="box-type" />
+                      <label for="custom" class="card"> Custom box </label>
+                    </div>
+                  </div>
+                  <!-- active when select custom box -->
+                  <div class="note cstm">
+                    Custom box need to submit a custom quotation request to
+                    admin
+                  </div>
+                </div>
+                <div class="block assembly">
+                  <div class="step-title">
+                    <h2>Dropship/Box Assembly</h2>
+                  </div>
+                  <div class="cards-wraper">
+                    <div class="card-wrap meaw active">
+                      <input
+                        id="ls10"
+                        type="radio"
+                        value="Less than: 10x10x10"
+                        name="box-assembly"
+                      />
+                      <label for="ls10" class="card"> > 10x10x10 </label>
+                    </div>
+                    <div class="card-wrap">
+                      <input
+                        id="gt10"
+                        type="radio"
+                        value="Greater than: 10x10x10"
+                        name="box-assembly"
+                      />
+                      <label for="gt10" class="card"> < 10x10x10 </label>
+                    </div>
+                    <div class="card-wrap">
+                      <input
+                        id="gt20"
+                        type="radio"
+                        value="Greater than: 20x20x20"
+                        name="box-assembly"
+                      />
+                      <label for="gt20" class="card"> < 20x20x20 </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="block">
+                  <div class="step-title">
+                    <h2>Stuffs required (Optional)</h2>
+                  </div>
+                  <div class="cards-wraper">
+                    <div class="card-wrap">
+                      <input
+                        id="sorting"
+                        type="checkbox"
+                        value="Sorting"
+                        name="reqd"
+                      />
+                      <label for="sorting" class="card"> Sorting </label>
+                    </div>
+                    <div class="card-wrap">
+                      <input
+                        id="folding"
+                        type="checkbox"
+                        value="Folding"
+                        name="reqd"
+                      />
+                      <label for="folding" class="card"> Folding </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="btn" id="calculateBtn">Calculate estimate</div>
+              </div>
+            </div>
+            <!-- step 1 end -->
+
+            <!-- step 2 -->
+            <div class="step-wraper" id="step2">
+              <div class="spacing-between">
+                <div class="pricing">
+                  <p>Your estimate</p>
+                  <h2>500.00 <span>USD</span></h2>
+                </div>
+                <div class="estimate-breakdown">
+                  <div class="block">
+                    <div class="list">
+                      <p class="item">Service: <span>Dropship</span></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="btn" id="getAQuoteNowBtn">Get a quote now</div>
+              </div>
+            </div>
+            <!-- step 2 end -->
+
+            <!-- step 3 -->
+            <div class="step-wraper" id="step3">
+              <div class="form">
+                <input type="text" placeholder="Name" name="name" required />
+                <div class="row">
+                  <input
+                    type="text"
+                    placeholder="Email"
+                    name="email"
+                    required
+                  />
+                  <input
+                    type="text"
+                    placeholder="Phone number"
+                    name="phone"
+                    required
+                  />
+                </div>
+                <textarea
+                  id=""
+                  placeholder="Item description"
+                  name="description"
+                  required
+                ></textarea>
+                <button type="submit" id="SubmitBtn">
+                  Submit quote for confirmation
+                </button>
+                <div class="note">
+                  This is an estimate only, the actual cost will be verified by
+                  the DFS
+                </div>
+              </div>
+            </div>
+            <!-- step 3 end -->
+
+            <!-- step 4 -->
+            <div class="step-wraper" id="step4">
+              <div class="step-title step-title-2">
+                <h2>Your quotion request submitted</h2>
+                <p>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Soluta, distinctio consequuntur! Hic quo accusantium.
+                </p>
+                <div class="btn">Okey, I undrstand</div>
+              </div>
+            </div>
+            <!-- step 4 end -->
+          </div>
+        </form>
+        <!-- multi-step form end -->
+      </div>
+    </main>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+    <script src="app.js"></script>
+  </body>
+</html>
