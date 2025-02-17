@@ -1,20 +1,7 @@
 class CostCalculator {
   constructor() {
-    this.CHARGES = {
-      sorting: 0.55,
-      folding: 0.55,
-      itemVarientChargeDropship: 1,
-      itemVarientChargeBulk: 1.5,
-      perItemCostDropship: 0.65,
-      perItemCostBulk: 1,
-      perItemPrint: 0.55,
-      recivingCharge: 75,
-      adminCharge: 125,
-      boxPrices: {
-        dropship: { ls10: 2.95, gt10: 3.95, gt20: 4.95 },
-        bulkship: { gt10: 6.95, gt20: 8.95 },
-      },
-    };
+  
+    document.querySelector("form").addEventListener("submit", this.SubmitData.bind(this));
 
     this.bulkShippingConfig = {
       totalLocations: 5,
@@ -250,14 +237,26 @@ class CostCalculator {
   }
 
   getBoxSize = (isBulkShip) => {
+    let boxLabel;
+    let boxSize;
+  
     if (isBulkShip) {
-      return this.gt10.checked ? "< 10x10x10" : "< 20x20x20";
+      boxLabel = this.gt10.checked ? "< 10x10x10" : "< 20x20x20";
+      boxSize = this.gt10.checked ? "small" : "medium";
+    } else {
+      if (this.ls10.checked) {
+        boxLabel = "> 10x10x10";
+        boxSize = "large";
+      } else if (this.gt10.checked) {
+        boxLabel = "< 10x10x10";
+        boxSize = "small";
+      } else {
+        boxLabel = "< 20x20x20";
+        boxSize = "medium";
+      }
     }
-    return this.ls10.checked
-      ? "> 10x10x10"
-      : this.gt10.checked
-      ? "< 10x10x10"
-      : "< 20x20x20";
+  
+    return { boxLabel, boxSize };
   };
 
   calculateCost() {
@@ -267,28 +266,30 @@ class CostCalculator {
     const apparelQ = parseInt(this.apparelQInput.value) || 0;
     const nonApparelQ = parseInt(this.nonApparelQInput.value) || 0;
     const printQ = parseInt(this.printQInput.value) || 0;
-    const sorting = this.sortingCheckbox.checked ? this.CHARGES.sorting : 0;
-    const folding = this.foldingCheckbox.checked ? this.CHARGES.folding : 0;
+
+    const folding = this.foldingCheckbox.checked ? "foldingFee" : "sortingFee";
+    const additionalFeeType = this.sortingCheckbox.checked && this.foldingCheckbox.checked ? "total" : folding;
+  
     const isBulkShip = this.bulkshipRadio.checked;
 
     if (isBulkShip) {
       this.totalCosting =
         this.bulkShippingConfig.calculateTotalBulkShippingCost({
-          totalLocations: 10,
-          apparelQuantity: 60,
-          nonApparelQuantity: 30,
-          printQuantity: 120,
-          boxSize: "medium",
-          additionalFeeType: "total",
+          totalLocations: destinations,
+          apparelQuantity: apparelQ,
+          nonApparelQuantity: nonApparelQ,
+          printQuantity: printQ,
+          boxSize: this.getBoxSize(isBulkShip).boxSize,
+          additionalFeeType,
         });
     } else {
       this.totalCosting = this.dropshippingConfig.calculateTotalDropshipCost({
-        totalDropshipOrders: 150,
-        apparelQuantity: 12,
-        nonApparelQuantity: 7,
-        printQuantity: 2,
-        boxSize: "large",
-        additionalFeeType: "total",
+        totalDropshipOrders: noOfDropship,
+        apparelQuantity: apparelQ,
+        nonApparelQuantity: nonApparelQ,
+        printQuantity: printQ,
+        boxSize: this.getBoxSize(isBulkShip).boxSize,
+        additionalFeeType,
       });
     }
 
@@ -308,7 +309,7 @@ class CostCalculator {
       { label: "Non-Apparel Quantity", value: nonApparelQ },
       { label: "Total Quantity", value: apparelQ + nonApparelQ },
       { label: "Box Type", value: "Standard Box" },
-      { label: "Dropship/Box Assembly", value: this.getBoxSize(isBulkShip) },
+      { label: "Dropship/Box Assembly", value: this.getBoxSize(isBulkShip).boxLabel },
     ];
 
     this.updateEstimateBreakdown();
@@ -346,11 +347,11 @@ class CostCalculator {
   sendMailToAdmin(userInfo) {
     this.breakdownData.push({
       label: "Admin charge",
-      value: `$${this.CHARGES.adminCharge}`,
+      value: `$${this.dropshippingConfig.fixedOperationalCosts.adminFee}`,
     });
     this.breakdownData.push({
       label: "Receiving Charge",
-      value: `$${this.CHARGES.recivingCharge}`,
+      value: `$${this.dropshippingConfig.fixedOperationalCosts.receivingFee}`,
     });
     const requestData = {
       user: userInfo,
@@ -365,10 +366,33 @@ class CostCalculator {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestData),
-    }).then(() => {
-      this.submitBtn.innerHTML = "Submit";
+    }).then((response) => response.json())
+    .then((data) => {
+      if (data.status) {
+        this.showStep(4);
+      } else {
+        alert("Something want wrong try again!");
+      }
+      this.submitBtn.innerHTML = "Submit quote for confirmation";  
+      this.submitBtn.disabled = false;
+    })
+    .catch((error) => {
+      alert("Something want wrong try again!");
+      this.submitBtn.innerHTML = "Submit quote for confirmation";  
       this.submitBtn.disabled = false;
     });
+  }
+
+  SubmitData(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const user = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      description: formData.get("description"),
+    };
+    this.sendMailToAdmin(user);
   }
 }
 
@@ -384,3 +408,5 @@ function cstmAlrt() {
 function RcstmAlrt() {
   cstm.classList.remove("active");
 }
+
+
